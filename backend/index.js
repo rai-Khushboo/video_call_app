@@ -11,6 +11,11 @@ const app = express();
 
 const PORT = process.env.PORT || 3000;
 
+//  Check environment variables
+console.log("PORT:", process.env.PORT);
+console.log("Mongo URI:", process.env.MONGOOSE_CONNECTION);
+console.log("JWT_SECRET:", process.env.JWT_SECRET);
+
 const allowedOrigins = [""];
 
 app.use(cors({
@@ -25,10 +30,10 @@ app.use(cors({
   methods : ['GET' , 'POST' , 'PUT' , 'DELETE']
 }));
 
-app.use(express.json);
-app.use(cookieParser);
-app.use('/api/auth' , authRoute);
+app.use(express.json());
+app.use(cookieParser());
 
+app.use('/api/auth' , authRoute);
 
 app.get('/' , (req , res)=>{
     res.json("hey hi , it's a home page");
@@ -37,5 +42,4 @@ app.get('/' , (req , res)=>{
 app.listen(PORT , async () => {
     await dbConnect();
     console.log(`Server is running on the port ${PORT}`);
-    
 })
